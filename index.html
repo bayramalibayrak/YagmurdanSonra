@@ -44,6 +44,7 @@
 
       // Unity banner gösterme fonksiyonu
       function unityShowBanner(msg, type) {
+        const warningBanner = document.querySelector("#unity-warning"); // warningBanner'ı seç
         function updateBannerVisibility() {
           warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
         }
@@ -79,9 +80,11 @@
 
       config.devicePixelRatio = 1;
 
+      const canvas = document.querySelector("#unity-canvas"); // canvas'ı seç
       canvas.style.width = "100%";
       canvas.style.height = "100%";
 
+      const loadingBar = document.querySelector("#unity-loading-bar"); // loadingBar'ı seç
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
@@ -90,6 +93,7 @@
         // Unity instance'ını oluştur
         createUnityInstance(canvas, config, (progress) => {
           // Yüklenme çubuğunu güncelle
+          const progressBarFull = document.querySelector("#unity-progress-bar-full"); // progressBarFull'ü seç
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           // Yükleme tamamlandığında loadingBar'ı gizle
@@ -99,9 +103,9 @@
           alert(message);
         });
       };
-      document.body.appendChild(script);
+     document.body.appendChild(script);
     </script>
   </body>
 </html>
 
- 
+     
