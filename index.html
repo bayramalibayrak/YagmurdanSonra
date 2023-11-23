@@ -50,15 +50,15 @@
         updateBannerVisibility();
       }
 
-      var loaderUrl = "https://srv1004-files.hstgr.io/9dfdc8120bde2beb/files/public_html/Build/YagmurdanSonra.loader.js";
-      var dataUrl = "https://srv1004-files.hstgr.io/9dfdc8120bde2beb/files/public_html/Build/YagmurdanSonra.data"
+    var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/YagmurdanSonra.loader.js";
       var config = {
-        dataUrl: dataUrl,
-        frameworkUrl: "https://srv1004-files.hstgr.io/9dfdc8120bde2beb/files/public_html/Build/YagmurdanSonra.framework.js",
-        codeUrl: "https://srv1004-files.hstgr.io/9dfdc8120bde2beb/files/public_html/Build/YagmurdanSonra.wasm",
+        dataUrl: buildUrl + "/YagmurdanSonra.data",
+        frameworkUrl: buildUrl + "/YagmurdanSonra.framework.js",
+        codeUrl: buildUrl + "/YagmurdanSonra.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
-        productName: "PostaciFero",
+        productName: "YagmurdanSonra",
         productVersion: "1.0",
         showBanner: unityShowBanner,
       };
@@ -74,7 +74,7 @@
 
       canvas.style.width = "100%";
       canvas.style.height = "100%";
-      
+
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
