@@ -20,8 +20,8 @@
     </div>
     <script type="module">
       // ESM yükleyiciyi konfigüre et
-      import { init } from './path/to/es-module-shims.js'; // es-module-shims.js'yi projenin doğru yoluna güncelle
-      init();
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
+      import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
 
       import { initializeApp } from "firebase/app";
       import { getAnalytics } from "firebase/analytics";
