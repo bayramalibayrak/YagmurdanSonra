@@ -16,15 +16,22 @@
           <div id="unity-progress-bar-full"></div>
         </div>
       </div>
-      <div id="unity-warning"></div>
+      <div id="unity-warning"> </div>
     </div>
     <script>
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
 
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
       function unityShowBanner(msg, type) {
         function updateBannerVisibility() {
           warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
@@ -43,40 +50,38 @@
         updateBannerVisibility();
       }
 
-      var config = {}; // config değişkenini tanımla
-      
-      var loaderUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.loader.js?alt=media&token=f0be0b10-fff0-4f01-be44-d3666022cf64";
-      var dataUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.data?alt=media&token=29ea21fd-eec9-434a-a05b-b6e3577d19a2";
-      var frameworkUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.framework.js?alt=media&token=1361faeb-c394-4b2c-be95-5e7bf80970fb";
-      var codeUrl =  "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.wasm?alt=media&token=71cbf1fb-2b4a-4b84-943f-e255485b2fb3";
+    var loaderUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.loader.js?alt=media&token=f0be0b10-fff0-4f01-be44-d3666022cf64";
+    var dataUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.data?alt=media&token=29ea21fd-eec9-434a-a05b-b6e3577d19a2";
+    var frameworkUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.framework.js?alt=media&token=1361faeb-c394-4b2c-be95-5e7bf80970fb";
+    var codeUrl =  "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.wasm?alt=media&token=71cbf1fb-2b4a-4b84-943f-e255485b2fb3";
+    var config = {
+    dataUrl: dataUrl,
+    frameworkUrl: frameworkUrl,
+    codeUrl: codeUrl,
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "DefaultCompany",
+    productName: "YagmurdanSonra",
+    productVersion: "1.0",
+    showBanner: unityShowBanner,
+};
 
-      function fetchDataFromFirebase() {
-        loaderUrl = loaderUrl;
-        dataUrl = dataUrl;
-        frameworkUrl = frameworkUrl;
-        codeUrl =  codeUrl;
-        
-        config = {
-          dataUrl: dataUrl,
-          frameworkUrl: frameworkUrl,
-          codeUrl: codeUrl,
-          streamingAssetsUrl: "StreamingAssets",
-          companyName: "DefaultCompany",
-          productName: "YagmurdanSonra",
-          productVersion: "1.0",
-          showBanner: unityShowBanner,
-        };
-      }
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
       config.devicePixelRatio = 1;
+
       canvas.style.width = "100%";
       canvas.style.height = "100%";
+
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
       script.src = loaderUrl;
-      document.body.appendChild(script);
       script.onload = () => {
-        fetchDataFromFirebase();
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
