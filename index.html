@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en-us">
   <head>
     <meta charset="utf-8">
@@ -21,10 +21,7 @@
     <script type="module">
       // ESM yükleyiciyi konfigüre et
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
-      import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js";
-
-      import { initializeApp } from "firebase/app";
-      import { getAnalytics } from "firebase/analytics";
+      import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-storage.js";
 
       // Firebase konfigürasyonu
       const firebaseConfig = {
@@ -37,10 +34,9 @@
         appId: "1:367040050765:web:e10e0a373b1cb5471cce04",
         measurementId: "G-2CE0WZNE4S"
       };
-      
+
       // Firebase'i başlat
       const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
 
       // Unity banner gösterme fonksiyonu
       function unityShowBanner(msg, type) {
@@ -63,49 +59,49 @@
       }
 
       // Unity konfigürasyonu
-      var loaderUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.loader.js?alt=media&token=f0be0b10-fff0-4f01-be44-d3666022cf64";
-      var dataUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.data?alt=media&token=29ea21fd-eec9-434a-a05b-b6e3577d19a2";
-      var frameworkUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.framework.js?alt=media&token=1361faeb-c394-4b2c-be95-5e7bf80970fb";
-      var codeUrl =  "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.wasm?alt=media&token=71cbf1fb-2b4a-4b84-943f-e255485b2fb3";
-      var config = {
-        dataUrl: dataUrl,
-        frameworkUrl: frameworkUrl,
-        codeUrl: codeUrl,
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "YagmurdanSonra",
-        productVersion: "1.0",
-        showBanner: unityShowBanner,
-      };
+      const storage = getStorage(app);
 
+      // Dosya URL'lerini al
+      const dataUrlPromise = getDownloadURL(ref(storage, 'WebGL/YagmurdanSonra/Build/YagmurdanSonra.data'));
+      const frameworkUrlPromise = getDownloadURL(ref(storage, 'WebGL/YagmurdanSonra/Build/YagmurdanSonra.framework.js'));
+      const codeUrlPromise = getDownloadURL(ref(storage, 'WebGL/YagmurdanSonra/Build/YagmurdanSonra.wasm'));
+
+      // Firebase Storage'dan alınan URL'leri kullanarak Unity konfigürasyonunu güncelle
+      Promise.all([dataUrlPromise, frameworkUrlPromise, codeUrlPromise]).then(urls => {
+        const [dataUrl, frameworkUrl, codeUrl] = urls;
+
+        // Unity konfigürasyonu
+        const config = {
+          dataUrl: dataUrl,
+          frameworkUrl: frameworkUrl,
+          codeUrl: codeUrl,
+          streamingAssetsUrl: "StreamingAssets",
+          companyName: "DefaultCompany",
+          productName: "YagmurdanSonra",
+          productVersion: "1.0",
+          showBanner: unityShowBanner,
+        };
+        
       config.devicePixelRatio = 1;
 
-      const canvas = document.querySelector("#unity-canvas"); // canvas'ı seç
       canvas.style.width = "100%";
       canvas.style.height = "100%";
 
-      const loadingBar = document.querySelector("#unity-loading-bar"); // loadingBar'ı seç
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
       script.src = loaderUrl;
       script.onload = () => {
-        // Unity instance'ını oluştur
         createUnityInstance(canvas, config, (progress) => {
-          // Yüklenme çubuğunu güncelle
-          const progressBarFull = document.querySelector("#unity-progress-bar-full"); // progressBarFull'ü seç
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
-          // Yükleme tamamlandığında loadingBar'ı gizle
           loadingBar.style.display = "none";
         }).catch((message) => {
-          // Hata durumunda bir alert göster
           alert(message);
         });
       };
-     document.body.appendChild(script);
+      document.body.appendChild(script);
     </script>
   </body>
 </html>
-
-     
+                                                                              
