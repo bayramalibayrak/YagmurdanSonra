@@ -18,14 +18,13 @@
       </div>
       <div id="unity-warning"> </div>
     </div>
-    <script type="module-shim" src="https://unpkg.com/es-module-shims@0.6.4/dist/es-module-shims.js"></script>
     <script type="module">
       // ESM yükleyiciyi konfigüre et
-      import { init } from 'https://unpkg.com/es-module-shims@0.6.4/dist/es-module-shims.js';
+      import { init } from './path/to/es-module-shims.js'; // es-module-shims.js'yi projenin doğru yoluna güncelle
       init();
 
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.esm.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-analytics.esm.js";
+      import { initializeApp } from "firebase/app";
+      import { getAnalytics } from "firebase/analytics";
 
       // Firebase konfigürasyonu
       const firebaseConfig = {
