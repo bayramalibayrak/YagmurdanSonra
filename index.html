@@ -81,7 +81,6 @@
         companyName: "DefaultCompany",
         productName: "YagmurdanSonra",
         productVersion: "1.0",
-        showBanner: unity
         showBanner: unityShowBanner,
       };
 
@@ -106,7 +105,7 @@
         createUnityInstance(canvas, config, (progress) => {
           // Yüklenme çubuğunu güncelle
           progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
+           }).then((unityInstance) => {
           // Yükleme tamamlandığında loadingBar'ı gizle
           loadingBar.style.display = "none";
         }).catch((message) => {
