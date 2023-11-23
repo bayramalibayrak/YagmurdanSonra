@@ -24,9 +24,8 @@
       import { init } from 'https://unpkg.com/es-module-shims@0.6.4/dist/es-module-shims.js';
       init();
 
-      // Firebase modüllerini yükle
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.4.0/firebase-app.esm.min.mjs';
-      import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.4.0/firebase-analytics.esm.min.mjs';
+      import { initializeApp } from "firebase/app";
+      import { getAnalytics } from "firebase/analytics";
 
       // Firebase konfigürasyonu
       const firebaseConfig = {
