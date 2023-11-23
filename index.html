@@ -26,12 +26,30 @@
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
 
-      // Shows a temporary message banner/ribbon for a few seconds, or
-      // a permanent error message on top of the canvas if type=='error'.
-      // If type=='warning', a yellow highlight color is used.
-      // Modify or remove this function to customize the visually presented
-      // way that non-critical warnings and error messages are presented to the
-      // user.
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "firebase/app";
+      import { getAnalytics } from "firebase/analytics";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+      
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCEcGT3r2bG1xNS80AJAO6JJb_5WVjDedM",
+        authDomain: "ketebeapp-3302e.firebaseapp.com",
+        databaseURL: "https://ketebeapp-3302e-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "ketebeapp-3302e",
+        storageBucket: "ketebeapp-3302e.appspot.com",
+        messagingSenderId: "367040050765",
+        appId: "1:367040050765:web:e10e0a373b1cb5471cce04",
+        measurementId: "G-2CE0WZNE4S"
+      };
+      
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+      // Unity banner gösterme fonksiyonu
       function unityShowBanner(msg, type) {
         function updateBannerVisibility() {
           warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
@@ -50,47 +68,17 @@
         updateBannerVisibility();
       }
 
-    var loaderUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.loader.js?alt=media&token=f0be0b10-fff0-4f01-be44-d3666022cf64";
-    var dataUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.data?alt=media&token=29ea21fd-eec9-434a-a05b-b6e3577d19a2";
-    var frameworkUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.framework.js?alt=media&token=1361faeb-c394-4b2c-be95-5e7bf80970fb";
-    var codeUrl =  "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.wasm?alt=media&token=71cbf1fb-2b4a-4b84-943f-e255485b2fb3";
-    var config = {
-    dataUrl: dataUrl,
-    frameworkUrl: frameworkUrl,
-    codeUrl: codeUrl,
-    streamingAssetsUrl: "StreamingAssets",
-    companyName: "DefaultCompany",
-    productName: "YagmurdanSonra",
-    productVersion: "1.0",
-    showBanner: unityShowBanner,
-};
-
-      // By default Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
-
-      config.devicePixelRatio = 1;
-
-      canvas.style.width = "100%";
-      canvas.style.height = "100%";
-
-      loadingBar.style.display = "block";
-
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
-          loadingBar.style.display = "none";
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-      document.body.appendChild(script);
-    </script>
-  </body>
-</html>
+      // Unity konfigürasyonu
+      var loaderUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.loader.js?alt=media&token=f0be0b10-fff0-4f01-be44-d3666022cf64";
+      var dataUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.data?alt=media&token=29ea21fd-eec9-434a-a05b-b6e3577d19a2";
+      var frameworkUrl = "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.framework.js?alt=media&token=1361faeb-c394-4b2c-be95-5e7bf80970fb";
+      var codeUrl =  "https://firebasestorage.googleapis.com/v0/b/ketebeapp-3302e.appspot.com/o/WebGL%2FYagmurdanSonra%2FBuild%2FYagmurdanSonra.wasm?alt=media&token=71cbf1fb-2b4a-4b84-943f-e255485b2fb3";
+      var config = {
+        dataUrl: dataUrl,
+        frameworkUrl: frameworkUrl,
+        codeUrl: codeUrl,
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "YagmurdanSonra",
+        productVersion: "1.0",
+        showBanner: unity
